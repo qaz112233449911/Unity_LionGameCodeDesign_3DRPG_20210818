@@ -643,16 +643,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10.5
-  jump: 100
+  jump: 280
   isGrounded: 0
   v3CheckGroundoffset: {x: 0, y: 0, z: 0}
   CheckGroundRadius: 0.1
   jumpsound: {fileID: 0}
   Landingsound: {fileID: 0}
-  animatirParWalk: "\u8D70\u8DEF\u958B\u95DC"
-  animatirParRun: "\u8DD1\u6B65\u958B\u95DC"
-  animatirParHurt: "\u53D7\u50B7\u958B\u95DC"
-  animatirParDead: "\u6B7B\u4EA1\u958B\u95DC"
+  animatorParWalk: "\u8D70\u8DEF\u958B\u95DC"
+  animatorParRun: "\u8DD1\u6B65\u958B\u95DC"
+  animatorParHurt: "\u53D7\u50B7\u958B\u95DC"
+  animatorParDead: "\u6B7B\u4EA1\u958B\u95DC"
+  animatorParJump: "\u8DF3\u8E8D\u89F8\u767C"
+  animatorParIsGrounded: "\u662F\u5426\u5728\u5730\u677F\u4E0A"
   playerObject: {fileID: 402725853}
 --- !u!136 &402725855
 CapsuleCollider:
@@ -2109,7 +2111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.78
+      value: 0.7767233
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalScale.y
@@ -2117,19 +2119,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4201702
+      value: 0.44446048
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -72.38444
+      value: -72.4627
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30.891665
+      value: 30.8917
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -80.509056
+      value: -80.4776
       objectReference: {fileID: 0}
     - target: {fileID: 4149764000196840, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2161,11 +2163,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4848001855696534, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3366022
+      value: 1.7048547
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848001855696534, guid: 537f714a0a7039549960966aef600efb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1455828
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848001855696534, guid: 537f714a0a7039549960966aef600efb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1983
       objectReference: {fileID: 0}
     - target: {fileID: 4848001855696534, guid: 537f714a0a7039549960966aef600efb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.944
+      value: 1.279
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 537f714a0a7039549960966aef600efb, type: 3}
