@@ -231,11 +231,21 @@ public class ThirdPersonController : MonoBehaviour
     /// <returns>是否碰到地板</returns>
     private bool CheckGround()
     {
-        return false;
+        //物理.覆蓋球體(中心點，半徑，圖層)
+        Collider[] hits = Physics.OverlapSphere(transform.position
+            + transform.right * v3CheckGroundoffset.x
+            + transform.up * v3CheckGroundoffset.y
+            + transform.forward * v3CheckGroundoffset.z
+            , CheckGroundRadius, 1 << 3);
+
+        //print("球體碰到的第一個物件 : " + hits[0].name);
+
+        //傳回 碰撞陣列數量 > 0 - 只要碰到指定圖層物件就代表在地面上
+        return hits.Length > 0;
     }
     private void Jump()
     {
-
+        print("是否在地面上 : " + CheckGround());
     }
     private void updateAnimation()
     {
@@ -317,7 +327,8 @@ public class ThirdPersonController : MonoBehaviour
     private void Update()
     #region
     {
-
+        CheckGround();
+        Jump();
     }
     
     //固定更新事件: 固定0.02秒執行一次 - 50FPS
@@ -334,7 +345,14 @@ public class ThirdPersonController : MonoBehaviour
         // 1 . 指定顏色
         // 2 . 繪製圖形
         Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
-        Gizmos.DrawSphere(new Vector3(80, 2, 95), 1);
+
+        //transform 與此腳本在同階層的 Transform元件
+        Gizmos.DrawSphere(
+            transform.position
+            + transform.right * v3CheckGroundoffset.x
+            + transform.up * v3CheckGroundoffset.y
+            + transform.forward * v3CheckGroundoffset.z
+            , CheckGroundRadius);
     }
     #endregion
 }

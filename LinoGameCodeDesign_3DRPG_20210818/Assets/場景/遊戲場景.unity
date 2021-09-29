@@ -646,7 +646,7 @@ MonoBehaviour:
   jump: 100
   isGrounded: 0
   v3CheckGroundoffset: {x: 0, y: 0, z: 0}
-  CheckGroundRadius: 0.2
+  CheckGroundRadius: 0.1
   jumpsound: {fileID: 0}
   Landingsound: {fileID: 0}
   animatirParWalk: "\u8D70\u8DEF\u958B\u95DC"
@@ -1407,7 +1407,7 @@ GameObject:
   - component: {fileID: 715163339}
   - component: {fileID: 715163338}
   - component: {fileID: 715163337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "\u5730\u5F62"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
