@@ -682,7 +682,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!82 &402725857
 AudioSource:
@@ -1170,6 +1170,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5d57c3dcc5c954b43bce3585e372977d, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 1b1a8cecbc5fd854d982b9e101bc14ca, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1a8cecbc5fd854d982b9e101bc14ca, type: 3}
 --- !u!1001 &652311879

@@ -199,14 +199,36 @@ public class ThirdPersonController : MonoBehaviour
         return weight / (height * height);
     }
     */
+    /// <summary>
+    /// 移動
+    /// </summary>
+    /// <param name="speedMove">移動速度</param>
     private void Move(float speedMove)
     {
+        //請取消 Animator 屬性 Apply Root Motion : 勾選時使用動畫位移資訊
+        //剛體.加速度 = 三維向量 - 加速度用來控制剛體三個軸向的運動速度
+        //前方*輸入值*移動速度
+        //使用前後左右軸向運動並且保持原本的地心引力
+        rig.velocity =
+            Vector3.forward * MoveInput("Vertical") * speedMove +
+            Vector3.right * MoveInput("Horizontal") * speedMove +
+            Vector3.up * rig.velocity.y;
+    }
 
-    }
-    private float MoveInput()
+    /// <summary>
+    /// 移動按鍵輸入
+    /// </summary>
+    /// <param name="axisName">要取得的軸向名稱</param>
+    /// <returns>移動按鍵值</returns>
+    private float MoveInput(string axisName)
     {
-        return 0;
+        return Input.GetAxis(axisName);
     }
+
+    /// <summary>
+    /// 檢查地板
+    /// </summary>
+    /// <returns>是否碰到地板</returns>
     private bool CheckGround()
     {
         return false;
@@ -296,6 +318,23 @@ public class ThirdPersonController : MonoBehaviour
     #region
     {
 
+    }
+    
+    //固定更新事件: 固定0.02秒執行一次 - 50FPS
+    //處理物理行為，例如:Rigidbody API
+    private void FixedUpdate()
+    {
+        Move(speed);
+    }
+
+    //繪製圖示事件
+    //在Unity Editor 內繪製圖示輔助開發，發布後會自動隱藏
+    private void OnDrawGizmos()
+    {
+        // 1 . 指定顏色
+        // 2 . 繪製圖形
+        Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
+        Gizmos.DrawSphere(new Vector3(80, 2, 95), 1);
     }
     #endregion
 }
