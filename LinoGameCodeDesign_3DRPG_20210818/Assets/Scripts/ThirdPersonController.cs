@@ -41,6 +41,9 @@ namespace LiangWei
         public string animatorParJump = "跳躍觸發";
         public string animatorParIsGrounded = "是否在地板上";
 
+        [Header("面向速度"), Range(0, 50)]
+        public float speedLookAt = 2;
+
         private AudioSource aud;
         private Rigidbody rig;
         private Animator ani;
@@ -209,9 +212,11 @@ namespace LiangWei
             //剛體.加速度 = 三維向量 - 加速度用來控制剛體三個軸向的運動速度
             //前方*輸入值*移動速度
             //使用前後左右軸向運動並且保持原本的地心引力
+            //Vector3.forward 世界座標 的 前方 (全域)
+            //transform.forward 此物件 的 前方 (區域)
             rig.velocity =
-                Vector3.forward * MoveInput("Vertical") * speedMove +
-                Vector3.right * MoveInput("Horizontal") * speedMove +
+                transform.forward * MoveInput("Vertical") * speedMove +
+                transform.right * MoveInput("Horizontal") * speedMove +
                 Vector3.up * rig.velocity.y;
         }
 
@@ -246,6 +251,7 @@ namespace LiangWei
             //傳回 碰撞陣列數量 > 0 - 只要碰到指定圖層物件就代表在地面上
             return hits.Length > 0;
         }
+
         private void Jump()
         {
             //print("是否在地面上 : " + CheckGround());
@@ -261,6 +267,7 @@ namespace LiangWei
                 aud.PlayOneShot(jumpsound, volumeRandom);
             }
         }
+
         private void UpdateAnimation()
         {
 
@@ -285,9 +292,31 @@ namespace LiangWei
             //判斷式 只有一行敘述(只有一個分號) 可以省略 大括號
             if (keyJump) ani.SetTrigger(animatorParJump);
         }
+
+
+        /// <summary>
+        /// 面向前方 : 面向攝影機前方位置
+        /// </summary>
+        private void LookAtForward()
+        {
+            //垂直軸向 取絕對值 後 大於 0.1 就處理 面向
+            if (Mathf.Abs(MoveInput("Vertical")) > 0.1f)
+            {
+                //取得前方角度 = 四元.面向角度(前方座標 - 本身座標)
+                Quaternion angle = Quaternion.LookRotation(thirdPersonGamera.posForward - transform.position);
+                //此物件的角度 = 四元.差值
+                transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speedLookAt);
+            }
+        }
         #endregion
 
         public GameObject playerObject;
+
+        /// <summary>
+        /// 攝影機類別
+        /// </summary>
+        private ThirdPersonGamera thirdPersonGamera;
+
         #region 事件 Event
         // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
         // 開始事件 : 遊戲開始時執行一次 - 處理初始化、取得資料等等
@@ -303,6 +332,10 @@ namespace LiangWei
             //3. 取得元件<泛型>();
             //類別可以使用繼承類別(父類別)的成員，公開或保護 欄位、屬性與方法
             ani = GetComponent<Animator>();
+
+            //攝影機類別 = 透過類型尋找物件<泛型>();
+            //FindObjectOfType 不要放在Update 內使用會造成大量效能負擔
+            thirdPersonGamera = FindObjectOfType<ThirdPersonGamera>();
         }
 
         private void Update()
@@ -310,6 +343,7 @@ namespace LiangWei
         {
             Jump();
             UpdateAnimation();
+            LookAtForward();
         }
 
         //固定更新事件: 固定0.02秒執行一次 - 50FPS
@@ -326,7 +360,7 @@ namespace LiangWei
             // 1 . 指定顏色
             // 2 . 繪製圖形
             Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
-
+            
             //transform 與此腳本在同階層的 Transform元件
             Gizmos.DrawSphere(
                 transform.position
