@@ -18,6 +18,8 @@ namespace LiangWei
         public float speedTurnVertical = 5;
         [Header("X 軸上下旋轉限制:最小與最大值")]
         public Vector2 limitAngleX = new Vector2(-0.2f, 0.2f);
+        [Header("攝影機在角色前方上下旋轉限制:最小與最大值")]
+        public Vector2 limitAngleFromTarget = new Vector2(-0.2f, 0);
 
         /// <summary>
         /// 攝影機前方座標
@@ -57,7 +59,7 @@ namespace LiangWei
         private void Update()
         {
             TurnCamera();
-            LimitAngleX();
+            LimitAngleXAndZFromTarget();
             FreezeAngleZ();
         }
         //在 Update 後執行，處理攝影機追蹤行為
@@ -106,10 +108,11 @@ namespace LiangWei
         /// <summary>
         /// 限制角度 X 軸
         /// </summary>
-        private void LimitAngleX()
+        private void LimitAngleXAndZFromTarget()
         {
             Quaternion angle = transform.rotation;
             angle.x = Mathf.Clamp(angle.x, limitAngleX.x, limitAngleX.y);
+            angle.z = Mathf.Clamp(angle.z, limitAngleFromTarget.x, limitAngleFromTarget.y);
             transform.rotation = angle;
         }
 
