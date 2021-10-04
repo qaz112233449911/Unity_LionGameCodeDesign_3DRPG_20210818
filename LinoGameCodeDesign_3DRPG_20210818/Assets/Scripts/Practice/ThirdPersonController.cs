@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine;       //引用 Unity API(倉庫-資料與功能)
+using UnityEngine.Video;  //引用 影片 API
 
-namespace LiangWei
+namespace LiangWei.Practice
 {
+    //修飾詞  類別             類別名稱  :  繼承類別
+    //MonoBehaviour : Unity 基底類別 ， 要掛在物件上一定要繼承
+    //繼承後會享有該類別的成員
+    //在類別以及成員上方添加三條斜線會添加摘要
+    //常用成員 : 欄位 Field、屬性 Property(變數)、方法 Method、事件 Event
+    /// <summary>
+    /// LiangWei 2021.09.06
+    /// 第三人稱控制器
+    /// 移動、跳躍
+    /// </summary>
     public class ThirdPersonController : MonoBehaviour
     {
         #region 欄位 Field
@@ -122,12 +133,7 @@ namespace LiangWei
         */
         //C# 7.0 存取子 可以使用 Lambda =>運算子
         //語法 get => { 程式區塊 } - 單行可省略大括號
-        
         private bool keyJump { get => Input.GetKeyDown(KeyCode.Space); }
-        /// <summary>
-        /// 隨機音量
-        /// </summary>
-        private float volumeRandom { get => Random.Range(0.7f, 1.5f); }
         #endregion
 
         #region 方法 Method
@@ -240,7 +246,6 @@ namespace LiangWei
 
             //print("球體碰到的第一個物件 : " + hits[0].name);
 
-            if (!isGrounded && hits.Length > 0) aud.PlayOneShot(Landingsound, volumeRandom);            
             isGrounded = hits.Length > 0;
 
             //傳回 碰撞陣列數量 > 0 - 只要碰到指定圖層物件就代表在地面上
@@ -257,8 +262,6 @@ namespace LiangWei
             {
                 //剛體.添加推力(此物件的上方 * 跳躍)
                 rig.AddForce(transform.up * jump);
-
-                aud.PlayOneShot(jumpsound, volumeRandom);
             }
         }
         private void UpdateAnimation()
@@ -293,7 +296,58 @@ namespace LiangWei
         // 開始事件 : 遊戲開始時執行一次 - 處理初始化、取得資料等等
         private void Start()
         {
+            /**事件練習
+            print(BMI(56, 1.73f, "LiangWei"));
+            print(BMI(66, 1.85f, "測試"));
+
+            Skill100();
+            Skill150();
+            Skill200();
+            //呼叫有參數方法時，必須輸入對應的引數
+            Skill(300);
+            Skill(999, "爆炸特效");
+            //需求 : 傷害值 500，特效用預設值，音效換成 咻咻咻
+            //有多個選填式參數時可使用指名參數語法 : 參數名稱 : 值
+            Skill(500, sound: "咻咻咻");
+            #region 輸出 方法
+            /**
+            print("哈囉，沃德");
+
+            Debug.Log("一般訊息");
+            Debug.LogWarning("警告訊息");
+            Debug.LogError("錯誤訊息");
+            */
             #endregion
+
+            /**屬性練習
+            print("欄位資料 - 移動速度 :" + speed);
+            print("屬性資料 - 讀寫屬性 :" + readAndWrite);
+            speed = 20.5f;
+            readAndWrite = 90;
+            print("修改後的資料");
+            print("欄位資料 - 移動速度 :" + speed);
+            print("屬性資料 - 讀寫屬性 :" + readAndWrite);
+            //唯獨屬性
+            //read = 7;   //唯獨屬性不能設定 set
+            print("唯獨屬性 :" + read);
+            print("唯獨屬性，有設預設值 :" + readValue);
+
+            //屬性存取練習
+            print("HP :" + hp);
+            hp = 100;
+            print("HP :" + hp);
+            
+
+            //呼叫自訂方法語法 : 方法名稱();
+            Test();
+            Test();
+            //呼叫有傳回值的方法
+            //1. 區域變數指定傳回值 - 區域變數僅能在此結構 (大括號) 內存取
+            int j = ReturnJump();
+            print("跳躍值 : " + j);
+            //2. 將傳回方當成值使用
+            print("跳躍值，當值使用 : " + (ReturnJump() + 1));
+            */
 
             //取得元件的方式
             //1. 物件欄位名稱.取得元件(類型(元件類型))當作 元件類型
@@ -305,6 +359,8 @@ namespace LiangWei
             ani = GetComponent<Animator>();
         }
 
+        // 更新事件 : 一秒約執行60次，60FPS - Frame Per Second
+        // 處理持續性運動，移動物件，監聽玩家輸入按鍵
         private void Update()
         #region
         {
@@ -338,5 +394,4 @@ namespace LiangWei
         #endregion
     }
 }
-
 
