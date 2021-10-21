@@ -23,6 +23,8 @@ namespace LiangWei.Dialogue
 
         private Transform target;
         private bool starDialogueKey { get => Input.GetKeyDown(KeyCode.E); }
+        [Header("對話系統")]
+        public DialogueSystem dialogueSystem;
         #endregion
 
         private void OnDrawGizmos()
@@ -35,6 +37,7 @@ namespace LiangWei.Dialogue
         {
             goTip.SetActive(CheckPlayer());
             LookAtPlayer();
+            StartDialogue();
         }
 
         /// <summary>
@@ -58,6 +61,16 @@ namespace LiangWei.Dialogue
             {
                 Quaternion angle = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speedLookAt);
+            }
+        }
+        /// <summary>
+        /// 玩家進入範圍內 並且 按下指定按鍵 請對話系統執行 開始對話
+        /// </summary>
+        private void StartDialogue()
+        {
+            if (CheckPlayer() && starDialogueKey)
+            {
+                dialogueSystem.Dialogue(dataDialogue);
             }
         }
     }
