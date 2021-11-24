@@ -19,7 +19,7 @@ namespace LiangWei
         private float hpEffectOriginal;
 
         //複寫父類別成員 override
-        public override void Hurt(float damage)
+        public override bool Hurt(float damage)
         {
             hpEffectOriginal = hp;
 
@@ -27,6 +27,8 @@ namespace LiangWei
             base.Hurt(damage);
 
             StartCoroutine(HpBarEffect());
+
+            return hp <= 0;
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace LiangWei
         {
             while (hpEffectOriginal != hp)                      //當 扣血前血量不等於血量
             {
-                hpEffectOriginal --;                            //遞減
+                hpEffectOriginal--;                             //遞減
                 imgHp.fillAmount = hpEffectOriginal / hpMax;    //更新血條
                 yield return new WaitForSeconds(0.01f);         //等待
             }

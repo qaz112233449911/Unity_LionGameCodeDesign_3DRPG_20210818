@@ -25,6 +25,8 @@ namespace LiangWei.Enemy
         public Vector2 v2RandomWait = new Vector2(1f, 5f);
         [Header("走路隨機秒數")]
         public Vector2 v2RandomWalk = new Vector2(3, 7);
+        [Header("面向玩家速度"), Range(0, 50)]
+        public float speedLookAt = 10;
         #endregion
 
         #region 欄位 : 私人
@@ -148,7 +150,7 @@ namespace LiangWei.Enemy
         /// </summary>
         private void Idle()
         {
-            if (playerInTrackRange) state = StateEnemy.Track;           //如果 玩家進入 追蹤範圍 就切為追蹤狀態
+            if (!targetIsDead && playerInTrackRange) state = StateEnemy.Track;           //如果 玩家進入 追蹤範圍 就切為追蹤狀態
 
             #region 進入條件
             if (isIdle) return;
@@ -177,7 +179,7 @@ namespace LiangWei.Enemy
         /// </summary>
         private void Walk()
         {
-            if (playerInTrackRange) state = StateEnemy.Track;           //如果 玩家進入 追蹤範圍 就切為追蹤狀態
+            if (!targetIsDead && playerInTrackRange) state = StateEnemy.Track;           //如果 玩家進入 追蹤範圍 就切為追蹤狀態
 
             nma.SetDestination(v3RandomWalkFinal);                                          //代理器.設定目的地(座標)
             ani.SetBool(parameterIdleWalk, nma.remainingDistance > 0.05f);                   //走路動畫 - 離目的地距離大約 0.1 時走路
@@ -269,6 +271,7 @@ namespace LiangWei.Enemy
             StartCoroutine(DelaySendDamageToTarget());    //啟動延遲傳送傷害給目標協程
         }
 
+        private bool targetIsDead;
         /// <summary>
         /// 延遲傳送傷害給目標
         /// </summary>
@@ -285,16 +288,25 @@ namespace LiangWei.Enemy
                 transform.forward * v3AttackOffset.z,
                 v3AttackSize / 2, Quaternion.identity, 1 << 6);
 
-            if (hits.Length > 0) hits[0].GetComponent<HurtSystem>().Hurt(attack);
+            if (hits.Length > 0) targetIsDead = hits[0].GetComponent<HurtSystem>().Hurt(attack);
+            if (targetIsDead) TargetDead();
 
             float waitToNextAttack = timeAttack - delaySendDamage;      //計算剩餘冷卻時間
             yield return new WaitForSeconds(waitToNextAttack);          //等待
 
             isAttack = false;                              //恢復 攻擊狀態
-        }
-        [Header("面向玩家速度"), Range(0, 50)]
-        public float speedLookAt = 10;
+        }        
 
+        /// <summary>
+        /// 目標死亡
+        /// </summary>
+        private void TargetDead()
+        {
+            state = StateEnemy.Walk;
+            isIdle = false;
+            isWalk = false;
+            nma.isStopped = false;
+        } 
         /// <summary>
         /// 面向玩家
         /// </summary>
