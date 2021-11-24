@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using LiangWei.Dialogue;
 
 namespace LiangWei.Enemy
 {
@@ -93,6 +94,12 @@ namespace LiangWei.Enemy
         #region 事件
         private Transform traPlayer;
         private string namePlayer = "主角";
+
+        [Header("NPC名稱")]
+        public string nameNPC = "NPC小明";
+
+        private NPC npc;
+        private HurtSystem hurtSystem;
         /// <summary>
         /// 隨機行走座標
         /// </summary>
@@ -106,8 +113,14 @@ namespace LiangWei.Enemy
             ani = GetComponent<Animator>();
             nma = GetComponent<NavMeshAgent>();
             nma.speed = speed;
-
+            hurtSystem = GetComponent<HurtSystem>();
+            
             traPlayer = GameObject.Find(namePlayer).transform;
+            npc = GameObject.Find(nameNPC).GetComponent<NPC>();
+
+            //受傷系統 - 死亡事件觸發時 請 NPC 更新數量
+            //AddListener(方法) 添加監聽器(方法)
+            hurtSystem.onDead.AddListener(npc.UpdateMissionCount);
 
             nma.SetDestination(transform.position);                      //導覽器 一開始就先啟動
         }
