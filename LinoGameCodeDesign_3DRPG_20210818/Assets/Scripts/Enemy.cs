@@ -54,6 +54,8 @@ namespace LiangWei.Enemy
         public Vector3 v3AttackOffset;
         public Vector3 v3AttackSize = Vector3.one;
 
+
+
         #region 繪製圖形
         private void OnDrawGizmos()
         {
@@ -101,6 +103,7 @@ namespace LiangWei.Enemy
         {
             ani = GetComponent<Animator>();
             nma = GetComponent<NavMeshAgent>();
+            nma.speed = speed;
 
             traPlayer = GameObject.Find(namePlayer).transform;
 
@@ -239,7 +242,9 @@ namespace LiangWei.Enemy
 
         [Header("攻擊時間"), Range(0, 5)]
         public float timeAttack = 2.5f;
-
+        [Header("攻擊延遲傳送傷害時間"), Range(0, 5)]
+        public float delaySendDamage = 0.5f;
+        
         private string parameterAttack = "攻擊觸發";
         private bool isAttack;
 
@@ -251,12 +256,27 @@ namespace LiangWei.Enemy
             nma.isStopped = true;                         //導覽器停止
             ani.SetBool(parameterIdleWalk, false);        //停止走路
             nma.SetDestination(traPlayer.position);
+            LookAtPlayer();
 
             if (nma.remainingDistance > rangeAttack) state = StateEnemy.Track;
             
-            if (isAttack) return;
+            if (isAttack) return;                         //如果 正在攻擊中 就跳出(避免重複攻擊)
+
+            isAttack = true;                              //正在 攻擊中
+
             ani.SetTrigger(parameterAttack);
 
+            StartCoroutine(DelaySendDamageToTarget());    //啟動延遲傳送傷害給目標協程
+        }
+
+        /// <summary>
+        /// 延遲傳送傷害給目標
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator DelaySendDamageToTarget()
+        {
+            yield return new WaitForSeconds(delaySendDamage);
+            
             //物理 盒形碰撞(中心點﹑一半尺寸﹑角度﹑圖層)
             Collider[] hits = Physics.OverlapBox(
                 transform.position +
@@ -265,9 +285,24 @@ namespace LiangWei.Enemy
                 transform.forward * v3AttackOffset.z,
                 v3AttackSize / 2, Quaternion.identity, 1 << 6);
 
-            if (hits.Length > 0) print("攻擊到的物件 : " + hits[0].name);
+            if (hits.Length > 0) hits[0].GetComponent<HurtSystem>().Hurt(attack);
 
-            isAttack = true;
+            float waitToNextAttack = timeAttack - delaySendDamage;      //計算剩餘冷卻時間
+            yield return new WaitForSeconds(waitToNextAttack);          //等待
+
+            isAttack = false;                              //恢復 攻擊狀態
+        }
+        [Header("面向玩家速度"), Range(0, 50)]
+        public float speedLookAt = 10;
+
+        /// <summary>
+        /// 面向玩家
+        /// </summary>
+        private void LookAtPlayer()
+        {
+            Quaternion angle = Quaternion.LookRotation(traPlayer.position - transform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speedLookAt);
+            ani.SetBool(parameterIdleWalk, transform.rotation != angle);
         }
         #endregion
     }
