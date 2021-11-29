@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace LiangWei.Dialogue
 {
@@ -25,6 +26,8 @@ namespace LiangWei.Dialogue
         private bool starDialogueKey { get => Input.GetKeyDown(KeyCode.E); }
         [Header("癸杠╰参")]
         public DialogueSystem dialogueSystem;
+        [Header("ЧΘヴ叭ㄆン")]
+        public UnityEvent onFinish;
 
         /// <summary>
         /// ヘ玡ヴ叭计秖
@@ -107,7 +110,11 @@ namespace LiangWei.Dialogue
             countCurrent++;
 
             //ヘ玡计秖 单 惠―计秖 篈 单 ЧΘヴ叭
-            if (countCurrent == dataDialogue.countNeed) dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+            if (countCurrent == dataDialogue.countNeed)
+            {
+                dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+                onFinish.Invoke();
+            }
         }
     }
 }

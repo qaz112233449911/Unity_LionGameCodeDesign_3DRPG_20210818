@@ -73,22 +73,21 @@ namespace LiangWei
         /// </summary>
         private void Attack()
         {
-            
+            #region 攻擊圖層遮色片處理
+            bool isWalk = ani.GetBool(parameterWalk);
+
+            //左腳、右腳、左右腳 IK 與根部
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.Root, !isWalk);
+
+            #endregion
 
             if (keyAttack && !isAttack)
             {
-                #region 攻擊圖層遮色片處理
-                bool isWalk = ani.GetBool(parameterWalk);
-
-                //左腳、右腳、左右腳 IK 與根部
-                maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftLeg, !isWalk);
-                maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightLeg, !isWalk);
-                maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftFootIK, !isWalk);
-                maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightFootIK, !isWalk);
-                maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.Root, !isWalk);
-
-                #endregion
-
+                
                 onAttack.Invoke();
                 isAttack = true;
                 ani.SetTrigger(parameterAttack);

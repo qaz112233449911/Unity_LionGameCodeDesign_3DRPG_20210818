@@ -605,7 +605,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 116796393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7213586124025800019, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+        m_TargetAssemblyTypeName: LiangWei.SceneController, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u904A\u6232\u5834\u666F"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &116796393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,6 +656,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116796390}
   m_CullTransparentMesh: 1
+--- !u!1 &166021552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166021554}
+  - component: {fileID: 166021553}
+  m_Layer: 0
+  m_Name: Area Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &166021553
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166021552}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 3
+  m_Shape: 0
+  m_Color: {r: 0.5849056, g: 0.17068805, b: 0.10760058, a: 1}
+  m_Intensity: 1
+  m_Range: 1000
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 2
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &166021554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166021552}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 91.32, y: 18.347223, z: 72.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &186835956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1739,18 @@ MonoBehaviour:
       - m_Target: {fileID: 402725854}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 969654578}
+        m_TargetAssemblyTypeName: LiangWei.GameManager, Assembly-CSharp
+        m_MethodName: StatFadeFinalUI
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4715,6 +4832,21 @@ MonoBehaviour:
   goTip: {fileID: 186835956}
   speedLookAt: 7.07
   dialogueSystem: {fileID: 199245596}
+  onFinish:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 969654578}
+        m_TargetAssemblyTypeName: LiangWei.GameManager, Assembly-CSharp
+        m_MethodName: StatFadeFinalUI
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1001 &559336368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4857,6 +4989,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4195845280015418, guid: 172be243f1a20af458b71a26294be8e5, type: 3}
   m_PrefabInstance: {fileID: 883439122}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &629333072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7213586124025800019, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+  m_PrefabInstance: {fileID: 2567489185955410186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8703c14eb1dc7474692350399a567de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &629971981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35162,7 +35305,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1066684705}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 629333072}
+        m_TargetAssemblyTypeName: LiangWei.SceneController, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1066684705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35288,7 +35443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066881023}
   m_LocalRotation: {x: 0.33598998, y: 0.31941012, z: -0.122290336, w: 0.87757224}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -38463,6 +38618,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edb2a042aac27e948970f508921a3402, type: 3}
+--- !u!1001 &2567489185955410186
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 967816503737274741, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_Name
+      value: "\u5834\u666F\u63A7\u5236\u5668"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 65.25099
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1146154
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 99.51102
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8695928660134583118, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cb3281e57c5f4864e9f00794c706a66a, type: 3}
 --- !u!1001 &2742141125639225869
 PrefabInstance:
   m_ObjectHideFlags: 0
