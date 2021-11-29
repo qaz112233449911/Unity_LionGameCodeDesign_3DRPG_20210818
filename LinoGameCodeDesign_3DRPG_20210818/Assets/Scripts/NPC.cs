@@ -38,11 +38,25 @@ namespace LiangWei.Dialogue
             Gizmos.DrawSphere(transform.position, checkPlayerRadius);
         }
 
+        private void Awake()
+        {
+            Initialize();
+        }
+
         private void Update()
         {
             goTip.SetActive(CheckPlayer());
             LookAtPlayer();
             StartDialogue();
+        }
+
+        /// <summary>
+        /// 初始設定
+        /// 狀態恢復為任務前
+        /// </summary>
+        private void Initialize()
+        {
+            dataDialogue.stateNPCMission = StateNPCMission.BeforeMission;
         }
 
         /// <summary>
@@ -71,12 +85,15 @@ namespace LiangWei.Dialogue
         /// <summary>
         /// 玩家進入範圍內 並且 按下指定按鍵 請對話系統執行 開始對話
         /// 玩家退出範圍外 停止對話
+        /// 判斷狀態 : 任務前、任務中、任務後
         /// </summary>
         private void StartDialogue()
         {
             if (CheckPlayer() && starDialogueKey)
             {
                 dialogueSystem.Dialogue(dataDialogue);
+
+                if (dataDialogue.stateNPCMission == StateNPCMission.BeforeMission) dataDialogue.stateNPCMission = StateNPCMission.Missionning;
             }
             else if (!CheckPlayer()) dialogueSystem.StopDialogue();
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace LiangWei.Dialogue
 {
@@ -20,6 +21,8 @@ namespace LiangWei.Dialogue
         public float dialogueInterval = 0.3f;
         [Header("對話按鍵")]
         public KeyCode dialogueKey = KeyCode.Space;
+        [Header("打字事件")]
+        public UnityEvent onType;
 
         /// <summary>
         /// 停止對話 : 關閉對話功能，介面淡出
@@ -66,10 +69,25 @@ namespace LiangWei.Dialogue
         /// <returns></returns>
         private IEnumerator ShowDialogueContent(DataDialogue data)
         {           
-            textName.text = "";                //清除 對話者
-            textName.text = data.nameDialogue; //更新 對話者
+            textName.text = "";                 //清除 對話者
+            textName.text = data.nameDialogue;  //更新 對話者
 
-            string[] dialogueContents = data.beforeMission;   //儲存 對話內容
+            #region 處理狀態與對話資料
+            string[] dialogueContents = { };    //儲存 對話內容
+
+            switch (data.stateNPCMission)
+            {
+                case StateNPCMission.BeforeMission:
+                    dialogueContents = data.beforeMission;
+                    break;
+                case StateNPCMission.Missionning:
+                    dialogueContents = data.Missionning;
+                    break;
+                case StateNPCMission.AfterMission:
+                    dialogueContents = data.afterMission;
+                    break;
+            }
+            #endregion
 
             //遍尋每一段對話
             for (int j = 0; j < dialogueContents.Length; j++)
@@ -80,7 +98,8 @@ namespace LiangWei.Dialogue
                 //遍尋對話每一個字
                 for (int i = 0; i < dialogueContents[j].Length; i++)
                 {
-                    textContent.text += data.beforeMission[j][i];
+                    onType.Invoke();                                              //執行事件
+                    textContent.text += dialogueContents[j][i];
                     yield return new WaitForSeconds(dialogueInterval);
                 }
 
